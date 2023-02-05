@@ -3,19 +3,19 @@ from fastapi.middleware.cors import CORSMiddleware
 import requests, time, asyncio
 
 def get_access_token():
-    url = 'http://127.0.0.1:8088/api/v1/security/login'
+    url = 'http://localhost:8088/api/v1/security/login'
     body = {
-        "password": "dhm123",
+        "password": "123456",
         "provider": "db",
         "refresh": True,
-        "username": "admin"
+        "username": "dashviewer"
     }
     response = requests.post(url=url, json=body)
     tokens = response.json()
     return tokens["access_token"], tokens["refresh_token"]
 
 def refresh_access_token():
-    url = 'http://127.0.0.1:8088/api/v1/security/refresh'
+    url = 'http://localhost:8088/api/v1/security/refresh'
     headers = {"Authorization": f'Bearer {refresh_token}'}
     response = requests.post(url=url, headers=headers)
     token = response.json()
@@ -41,21 +41,21 @@ def test():
 
 @app.post("/fetchGuestToken")
 def fetch_token():
-    url = 'http://127.0.0.1:8088/api/v1/security/guest_token/'
+    url = 'http://localhost:8088/api/v1/security/guest_token/'
     headers = {"Authorization": f'Bearer {access_token}'}
     body = {
         "resources": [
             {
-                "id": "8",
+                "id": "25578f18-4f06-4e2f-b53c-d97a1a2d6ae8",
                 "type": "dashboard"
             }
         ],
         "rls": [
         ],
         "user": {
-            "first_name": "Daniel",
-            "last_name": "Moraes",
-            "username": "dmoraes"
+            "first_name": "abcd",
+            "last_name": "abcd",
+            "username": "abcd"
         }
     }
     response = requests.post(url=url, json=body, headers=headers)
